@@ -9,6 +9,7 @@
 	}
 	else
 	{
-		estacionamiento::Sacar();
+		$datos = estacionamiento::Leer();
+		var_dump($datos);
 	}
 ?>
