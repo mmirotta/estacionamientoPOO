@@ -9,7 +9,6 @@
 	}
 	else
 	{
-		$datos = estacionamiento::Leer();
-		var_dump($datos);
+		$datos = estacionamiento::Sacar($patente);
 	}
 ?>

@@ -6,10 +6,25 @@
 	{
 		public static function Guardar($patente)
 		{
-			$archivo=fopen("autos.txt", "a"); //escribe pero mantiene lo que estaba
-			$ahora = date("Y-m-d H:i:s");
-			$renglon = $patente . "=>" . $ahora . "\n";
+			$archivo=fopen("autos.txt", "a"); 
+			$hora = date("Y-m-d H:i:s");
+			$renglon = $patente . "=>" . $hora . "\n";
 			fwrite($archivo, $renglon);
+			fclose($archivo);
+		}
+
+		public static function GuardarListado($listado)
+		{
+			$archivo=fopen("autos.txt", "w"); 
+			foreach ($listado as $auto) 
+			{
+				if($auto[0]!="")
+				{
+					$dato = $auto[0] . "=>" . $auto[1];
+					fwrite($archivo, $dato);
+				}
+			}
+
 			fclose($archivo);
 		}
 
@@ -28,9 +43,37 @@
 			return $listaDeAutos;
 		}
 
-		public static function Sacar()
+		public static function Sacar($patente)
 		{
-			
+			$listaDeAutos = estacionamiento::Leer();
+			$listado = array();
+			$esta = false;
+			foreach ($listaDeAutos as $auto) 
+			{
+				if($auto[0]==$patente)
+				{
+					$esta = true;
+					$ahora = date("Y-m-d H:i:s");
+					$inicio = $auto[1];
+					$diferencia = strtotime($ahora) - strtotime($inicio);
+					$costo = ($diferencia/3600) * 30;
+					$mensaje = "El tiempo transcurrido es " . $diferencia . "segundos <br> Costo: " . $costo . "$";
+				}
+				else
+				{
+					$listado[]=$auto;
+				}
+			}
+			if (!$esta)
+			{
+				$mensaje = "No esta esa patente";
+			}
+
+			$primera = true;
+
+			estacionamiento::GuardarListado($listado);
+
+			echo $mensaje;
 		}
 	}
 ?>
