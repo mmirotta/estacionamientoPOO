@@ -43,6 +43,23 @@
 			return $listaDeAutos;
 		}
 
+		public static function CargarTablaEstacionados()
+		{
+			$listaDeAutos = estacionamiento::Leer();
+			$archivo=fopen("tablaestacionados.php", "w"); 
+			fwrite($archivo, "<table> <h2>Autos</h2><th>Patente</th> <th>Fecha</th>");
+			foreach ($listaDeAutos as $auto) 
+			{
+				if($auto[0]!="")
+				{
+					$dato = "<tr><td>".$auto[0] . "</td> <td>" . $auto[1] . "</td></tr>";
+					fwrite($archivo, $dato);
+				}
+			}
+			fwrite($archivo, "</table>");
+			fclose($archivo);
+		}
+
 		public static function Sacar($patente)
 		{
 			$listaDeAutos = estacionamiento::Leer();

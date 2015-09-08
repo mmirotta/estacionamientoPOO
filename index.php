@@ -1,7 +1,8 @@
 <?php
 
 $path = "gestion.php";
-
+require "estacionamiento.php";
+estacionamiento::CargarTablaEstacionados();
 
 ?>
 <!doctype html>
@@ -38,8 +39,9 @@ $path = "gestion.php";
 
     </div>
       <div class="CajaEnunciado animated bounceInLeft">
-      <h2>autos:</h2>
-  
+      <?php
+        include "tablaestacionados.php";
+      ?>
       
     </div>
       		
